@@ -61,38 +61,6 @@
           </div>
         </div>
 
-        <!-- Demo Credentials -->
-        <div class="rounded-md bg-blue-50 p-4">
-          <div class="flex">
-            <div class="flex-shrink-0">
-              <InformationCircleIcon class="h-5 w-5 text-blue-400" />
-            </div>
-            <div class="ml-3">
-              <h3 class="text-sm font-medium text-blue-800">
-                Credenciales de demostración
-              </h3>
-              <div class="mt-2 text-sm text-blue-700">
-                <div class="space-y-2">
-                  <div class="grid grid-cols-1 gap-2">
-                    <button type="button" @click="fillCredentials('admin')"
-                      class="text-left text-xs hover:bg-blue-100 p-2 rounded">
-                      <strong>Admin:</strong> admin@ejemplo.com / Aula_d1g1t4l
-                    </button>
-                    <button type="button" @click="fillCredentials('teacher')"
-                      class="text-left text-xs hover:bg-blue-100 p-2 rounded">
-                      <strong>Maestra:</strong> maestra@ejemplo.com / password123
-                    </button>
-                    <button type="button" @click="fillCredentials('parent')"
-                      class="text-left text-xs hover:bg-blue-100 p-2 rounded">
-                      <strong>Padre:</strong> padre@ejemplo.com / password123
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <!-- Submit Button -->
         <div>
           <button type="submit" :disabled="loading || !credentials.email || !credentials.password"
@@ -131,7 +99,6 @@ import {
   EyeIcon,
   EyeSlashIcon,
   ExclamationCircleIcon,
-  InformationCircleIcon,
   AcademicCapIcon
 } from '@heroicons/vue/24/outline'
 
@@ -150,18 +117,6 @@ const credentials = reactive({
 const loading = ref(false)
 const error = ref('')
 const showPassword = ref(false)
-
-const demoCredentials = {
-  admin: { email: 'admin@ejemplo.com', password: 'Aula_d1g1t4l' },
-  teacher: { email: 'maestra@ejemplo.com', password: 'password123' },
-  parent: { email: 'padre@ejemplo.com', password: 'password123' }
-}
-
-const fillCredentials = (role: keyof typeof demoCredentials) => {
-  credentials.email = demoCredentials[role].email
-  credentials.password = demoCredentials[role].password
-  error.value = ''
-}
 
 const handleLogin = async () => {
   loading.value = true
