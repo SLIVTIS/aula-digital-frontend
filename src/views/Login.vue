@@ -91,6 +91,7 @@
 </template>
 
 <script setup lang="ts">
+defineOptions({ name: 'LoginView' })
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
@@ -101,8 +102,6 @@ import {
   ExclamationCircleIcon,
   AcademicCapIcon
 } from '@heroicons/vue/24/outline'
-
-defineOptions({ name: 'LoginView' })
 
 const router = useRouter()
 const { login } = useAuth()

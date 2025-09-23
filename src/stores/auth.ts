@@ -8,6 +8,8 @@ type AuthState = {
   isAuthenticated: boolean
 }
 
+const baseURL = import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, '')
+
 export const useAuthStore = defineStore('auth', {
   state: (): AuthState => ({
     user: null,
@@ -22,17 +24,29 @@ export const useAuthStore = defineStore('auth', {
       this.isAuthenticated = true
     },
 
-    logout() {
-      this.user = null
-      this.token = ''
-      this.isAuthenticated = false
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
+    //Cierre de sesión
+    async logout() {
+
+      const res = await fetch(`${baseURL}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.token}`
+        },
+        body: ''
+      })
+
+      if (res.ok) {
+        this.user = null
+        this.token = ''
+        this.isAuthenticated = false
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+      }
     },
 
     // login que consulta a la API
     async login(email: string, password: string): Promise<boolean> {
-      const baseURL = import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, '')
       if (!baseURL) throw new Error('VITE_API_BASE_URL no está definido')
 
       const res = await fetch(`${baseURL}/login`, {
