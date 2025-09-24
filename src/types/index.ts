@@ -4,7 +4,7 @@ export interface User {
   name: string
   role: 'admin' | 'teacher' | 'parent'
   avatarPath?: string
-  createdAt: string
+  createdAt?: string
 }
 
 export interface ApiResponse<T> {
@@ -23,4 +23,11 @@ export interface LoginResponse {
   token: string
   user: User
   expiresAt: string
+}
+
+export interface Child {
+  id: string
+  name: string
+  grade: string
+  group: string
 }
