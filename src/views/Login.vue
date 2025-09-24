@@ -104,7 +104,7 @@ import {
 } from '@heroicons/vue/24/outline'
 
 const router = useRouter()
-const { login } = useAuth()
+const { signIn } = useAuth()
 
 const appName = import.meta.env.VITE_APP_NAME || 'Aula Digital'
 
@@ -122,7 +122,7 @@ const handleLogin = async () => {
   error.value = ''
 
   try {
-    const success = await login(credentials.email, credentials.password)
+    const success = await signIn(credentials.email, credentials.password)
 
     if (success) {
       router.push('/dashboard')

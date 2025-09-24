@@ -96,7 +96,7 @@
                 <div class="py-1">
                   <router-link to="/profile" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     @click="showUserMenu = false">
-                    <UserIcon class="w-4 h-4 mr-3" />
+                    <UsersIcon class="w-4 h-4 mr-3" />
                     Mi Perfil
                   </router-link>
                   <button @click="handleLogout"
@@ -132,7 +132,7 @@ import {
   XMarkIcon,
   BellIcon,
   ChevronDownIcon,
-  UserIcon,
+  UsersIcon,
   ArrowRightOnRectangleIcon,
   HomeIcon,
   SpeakerWaveIcon,
@@ -144,7 +144,7 @@ import {
 
 const route = useRoute()
 const router = useRouter()
-const { user, logout, isAdmin, isTeacher } = useAuth()
+const { user, signOut, isAdmin, isTeacher } = useAuth()
 
 const appName = import.meta.env.VITE_APP_NAME || 'Plataforma Escolar'
 
@@ -208,7 +208,7 @@ const navigationItems = computed(() => {
     baseItems.push({
       name: 'Usuarios',
       href: '/users',
-      icon: UserIcon,
+      icon: UsersIcon,
       badge: 0
     })
   }
@@ -236,7 +236,7 @@ const getRoleLabel = (role?: string): string => {
 
 //Accion de cierre de sesión
 const handleLogout = async () => {
-  await logout()
+  await signOut()
   router.push('/login')
 }
 
