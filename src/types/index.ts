@@ -1,11 +1,4 @@
-export interface User {
-  id: string
-  email: string
-  name: string
-  role: 'admin' | 'teacher' | 'parent'
-  avatarPath?: string
-  createdAt?: string
-}
+import type { User } from "./user"
 
 export interface ApiResponse<T> {
   success: boolean
