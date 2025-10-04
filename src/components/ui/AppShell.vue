@@ -43,7 +43,7 @@
               :alt="user?.name" class="w-10 h-10 rounded-full object-cover">
             <div class="flex-1 min-w-0">
               <p class="text-sm font-medium text-gray-900 truncate">{{ user?.name }}</p>
-              <p class="text-xs text-gray-500 capitalize">{{ getRoleLabel(user?.role) }}</p>
+              <p class="text-xs text-gray-500 capitalize">{{ user?.role.name }}</p>
             </div>
           </div>
         </div>
