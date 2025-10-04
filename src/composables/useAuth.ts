@@ -11,9 +11,9 @@ export const useAuth = () => {
   const user = computed((): User | null => authStore.user)
   const isAuthenticated = computed((): boolean => authStore.isAuthenticated)
 
-  const isAdmin = computed((): boolean => authStore.user?.role === 'admin')
-  const isTeacher = computed((): boolean => authStore.user?.role === 'teacher')
-  const isParent = computed((): boolean => authStore.user?.role === 'parent')
+  const isAdmin = computed((): boolean => authStore.user?.role.slug === 'admin')
+  const isTeacher = computed((): boolean => authStore.user?.role.slug === 'teacher')
+  const isParent = computed((): boolean => authStore.user?.role.slug === 'parent')
 
   //const login = (email: string, password: string) => authStore.login(email, password)
   //const logout = () => authStore.logout()
