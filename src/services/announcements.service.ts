@@ -50,7 +50,6 @@ export async function listAnnouncements(params?: {
 
     const url = q.toString() ? `${BASE}?${q}` : BASE
 
-    console.log(params)
     // Respuesta tipo Laravel paginator (como la que pegaste)
     const page = await getJSON<LaravelPage<ApiAnnouncement>>(url)
 

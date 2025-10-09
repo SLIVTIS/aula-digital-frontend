@@ -5,7 +5,7 @@ const Dashboard = () => import('@/views/Dashboard.vue')
 const UserManagement = () => import('@/views/UserManagement.vue')
 const AvisosCentralizados = () => import('@/views/AvisosCentralizadosView.vue') //importar vista de avisos centralizados//
 const CreateAnnouncement = () => import('@/views/CreateAnnouncement.vue')
-
+const AnnouncementDetail = () => import('@/views/AnnouncementDetail.vue')
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -55,6 +55,16 @@ const router = createRouter({
       }
     },
     {
+      path: '/announcements/:id',
+      name: 'AnnouncementDetail',
+      component: AnnouncementDetail,
+      meta: {
+        requiresAuth: true,
+        roles: ['admin', 'teacher', 'parent'],
+        title: 'Detalle del Aviso'
+      }
+    },
+    {
       path: '/announcements/create',
       name: 'CreateAnnouncement',
       component: CreateAnnouncement,
@@ -63,8 +73,8 @@ const router = createRouter({
         roles: ['admin', 'teacher'],
         title: 'Crear Aviso'
       }
-    },
-  ],
+    }
+  ]
 })
 
 export default router
