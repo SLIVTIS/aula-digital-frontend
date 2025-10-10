@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
-import type { User } from '@/types'
+import type { User } from '@/types/user'
 import { login, logout } from '@/services/auth.service'
 
 export const useAuth = () => {

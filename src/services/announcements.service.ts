@@ -50,7 +50,7 @@ export async function listAnnouncements(params?: {
 
     const url = q.toString() ? `${BASE}?${q}` : BASE
 
-    // Respuesta tipo Laravel paginator (como la que pegaste)
+    // Respuesta tipo Laravel paginator
     const page = await getJSON<LaravelPage<ApiAnnouncement>>(url)
 
     return {
@@ -70,6 +70,7 @@ export async function getAnnouncement(id: number): Promise<Announcement> {
 }
 
 export async function createAnnouncement(payload: CreateAnnouncementDTO): Promise<Announcement> {
+    console.log(payload)
     const dto = await sendJSON<ApiAnnouncement>(BASE, 'POST', payload)
     return mapAnnouncementFromApi(dto)
 }

@@ -15,7 +15,7 @@ export interface UseAnnouncementDetailOptions {
   /** Observar cambios de la ruta y recargar (default: true) */
   watchRoute?: boolean
   /**
-   * Función opcional para marcar como leído en backend.
+   * Función para marcar como leído en backend.
    */
   markReadFn?: (id: number) => Promise<void>
 }
