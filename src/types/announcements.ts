@@ -51,7 +51,7 @@ export interface Announcement {
   created_at: ISODateTime
   updated_at: ISODateTime
 
-  // AHORA: autor “flexible” para lista/detalle
+  //autor “flexible” para lista/detalle
   author: AuthorSummary
   targets: AnnouncementTarget[]
   reads: AnnouncementRead[]
@@ -61,8 +61,7 @@ export interface CreateAnnouncementDTO {
   title: string
   body_md: string
   visibility: AnnouncementVisibility
-  published_at?: ISODateTime | null
-  is_archived?: boolean
+  post: boolean
   targets?: Array<
     { target_type: 'group'; group_id: number } | { target_type: 'user'; user_id: number }
   >

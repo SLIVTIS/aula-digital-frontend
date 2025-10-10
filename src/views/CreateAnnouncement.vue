@@ -19,7 +19,7 @@
 
       <!-- Form Container -->
       <div class="bg-white shadow-sm border border-gray-200 rounded-lg p-6">
-        <AnnouncementForm :loading="creating" :available-groups="availableGroups" @cancel="handleCancel" />
+        <AnnouncementForm :loading="creating" @cancel="handleCancel" />
       </div>
 
       <!-- Success Message -->
@@ -53,10 +53,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref} from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuth } from '@/composables/useAuth'
-import type { Announcement } from '@/types/announcements'
 import AppShell from '@/components/ui/AppShell.vue'
 import AnnouncementForm from '@/components/announcements/AnnouncementForm.vue'
 import {
@@ -65,20 +63,11 @@ import {
 } from '@heroicons/vue/24/outline'
 
 const router = useRouter()
-const { user } = useAuth()
 
 
 const creating = ref(false)
 const showSuccess = ref(false)
 
-const availableGroups = computed(() => {
-  if (user.value?.role === 'admin') {
-    return ['1A', '1B', '2A', '2B', '3A', '3B', '4A', '4B', '5A', '5B', '6A', '6B']
-  } else if (user.value?.role === 'teacher') {
-    return user.value.groups || []
-  }
-  return []
-})
 
 const handleCancel = () => {
   if (confirm('¿Estás seguro de que quieres cancelar? Se perderán todos los cambios.')) {
