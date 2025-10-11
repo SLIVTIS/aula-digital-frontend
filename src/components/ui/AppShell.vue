@@ -73,9 +73,9 @@
               <button @click="showNotifications = !showNotifications"
                 class="p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-full transition-colors duration-200">
                 <BellIcon class="w-6 h-6" />
-                <span v-if="unreadNotificationsCount > 0"
+                <span v-if="badge > 0"
                   class="absolute -top-1 -right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-                  {{ unreadNotificationsCount > 99 ? '99+' : unreadNotificationsCount }}
+                  {{ badge > 99 ? '99+' : badge }}
                 </span>
               </button>
             </div>
@@ -126,6 +126,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
+import { useNotifications } from '@/composables/useNotifications'
 import {
   AcademicCapIcon,
   Bars3Icon,
@@ -144,7 +145,12 @@ import {
 
 const route = useRoute()
 const router = useRouter()
+
 const { user, signOut, isAdmin, isTeacher } = useAuth()
+const {
+  items, loading, page, hasNext, hasPrev, badge,
+  fetchList, setRead, setAllRead, setFilters, fetchBadge
+} = useNotifications({ autoFetchList: true, autoFetchBadge: true, badgePollMs: 15000 });
 
 const appName = import.meta.env.VITE_APP_NAME || 'Plataforma Escolar'
 
