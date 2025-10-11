@@ -13,6 +13,7 @@ import type {
 import type { LaravelPage } from '@/types/pagination'
 
 const BASE = '/announcements'
+const BASE_HISTORY = '/announcements/history'
 
 export type AnnouncementsPage = {
     items: Announcement[]
@@ -53,6 +54,40 @@ export async function listAnnouncements(params?: {
     // Respuesta tipo Laravel paginator
     const page = await getJSON<LaravelPage<ApiAnnouncement>>(url)
 
+    return {
+        items: mapAnnouncementsFromApi(page.data),
+        page: page.current_page,
+        perPage: page.per_page,
+        total: page.total,
+        lastPage: page.last_page,
+        hasNext: !!page.next_page_url,
+        hasPrev: !!page.prev_page_url,
+    }
+}
+
+export async function listAnnouncementHistory(params?: {
+    page?: number
+    perPage?: number
+    search?: string
+    visibility?: AnnouncementVisibility
+    archived?: boolean
+    published?: boolean
+    sort?: string
+    direction?: 'asc' | 'desc'
+}): Promise<AnnouncementsPage> {
+    const q = new URLSearchParams()
+    if (params?.page) q.set('page', String(params.page))
+    if (params?.perPage) q.set('per_page', String(params.perPage))
+    if (params?.search) q.set('q', params.search)
+    if (params?.visibility) q.set('visibility', params.visibility)
+    if (typeof params?.archived === 'boolean') q.set('archived', params.archived ? '1' : '0')
+    if (typeof params?.published === 'boolean') q.set('published', params.published ? '1' : '0')
+    if (params?.sort) q.set('sort', params.sort)
+    if (params?.direction) q.set('direction', params.direction)
+
+    const url = q.toString() ? `${BASE_HISTORY}?${q}` : BASE_HISTORY
+
+    const page = await getJSON<LaravelPage<ApiAnnouncement>>(url)
     return {
         items: mapAnnouncementsFromApi(page.data),
         page: page.current_page,

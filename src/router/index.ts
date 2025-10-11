@@ -1,3 +1,4 @@
+import AnnouncementHistory from '@/views/AnnouncementHistory.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const Login = () => import('@/views/Login.vue')
@@ -68,6 +69,16 @@ const router = createRouter({
       path: '/announcements/create',
       name: 'CreateAnnouncement',
       component: CreateAnnouncement,
+      meta: {
+        requiresAuth: true,
+        roles: ['admin', 'teacher'],
+        title: 'Crear Aviso'
+      }
+    },
+    {
+      path: '/announcements/history',
+      name: 'AnnouncementHistory',
+      component: AnnouncementHistory,
       meta: {
         requiresAuth: true,
         roles: ['admin', 'teacher'],
