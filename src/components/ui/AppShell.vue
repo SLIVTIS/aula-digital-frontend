@@ -78,9 +78,63 @@
                   {{ badge > 99 ? '99+' : badge }}
                 </span>
               </button>
+
+              <!-- Notifications dropdown -->
+              <div v-if="showNotifications"
+                class="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50"
+                @click.stop>
+                <div class="p-4 border-b border-gray-200">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-medium text-gray-900">Notificaciones</h3>
+                    <button v-if="unreadNotificationsCount > 0" @click="setAllRead"
+                      class="text-xs text-primary-600 hover:text-primary-700">
+                      Marcar todas como leídas
+                    </button>
+                  </div>
+                </div>
+
+                <div class="max-h-96 overflow-y-auto">
+                  <div v-if="items.length === 0" class="p-4 text-center">
+                    <BellIcon class="w-8 h-8 text-gray-300 mx-auto mb-2" />
+                    <p class="text-sm text-gray-500">No hay notificaciones</p>
+                  </div>
+
+                  <div v-else class="divide-y divide-gray-200">
+                    <div v-for="notification in items" :key="notification.id"
+                      class="p-4 hover:bg-gray-50 cursor-pointer transition-colors duration-200"
+                      :class="{ 'bg-blue-50': !notification.isRead }" @click="handleNotificationClick(notification)">
+                      <div class="flex space-x-3">
+                        <div class="flex-shrink-0">
+                          <div class="w-8 h-8 rounded-full flex items-center justify-center"
+                            :class="getNotificationIconClass(notification.type)">
+                            <component :is="getNotificationIcon(notification.type)" class="w-4 h-4" />
+                          </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                          <p class="text-sm font-medium text-gray-900">{{ notification.payload.title }}</p>
+                          <p class="text-sm text-gray-600 truncate">{{ notification.payload.excerpt }}</p>
+                          <p class="text-xs text-gray-500 mt-1">{{ formatNotificationDate(notification.createdAt) }}</p>
+                        </div>
+                        <div v-if="!notification.isRead" class="flex-shrink-0">
+                          <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Menu de usuario -->
+                <div class="p-4 border-t border-gray-200">
+                  <router-link to="/notifications"
+                    class="block text-center text-sm text-primary-600 hover:text-primary-700"
+                    @click="showNotifications = false">
+                    Ver todas las notificaciones
+                  </router-link>
+                </div>
+              </div>
             </div>
 
-            <!-- Menu de usuario -->
+            <!-- User menu -->
             <div class="relative">
               <button @click="showUserMenu = !showUserMenu"
                 class="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 transition-colors duration-200">
@@ -89,14 +143,14 @@
                 <ChevronDownIcon class="w-4 h-4 text-gray-500" />
               </button>
 
-              <!-- Menu desplegable de usuario -->
+              <!-- User dropdown -->
               <div v-if="showUserMenu"
                 class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50"
                 @click.stop>
                 <div class="py-1">
                   <router-link to="/profile" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     @click="showUserMenu = false">
-                    <UsersIcon class="w-4 h-4 mr-3" />
+                    <UserIcon class="w-4 h-4 mr-3" />
                     Mi Perfil
                   </router-link>
                   <button @click="handleLogout"
@@ -134,6 +188,7 @@ import {
   BellIcon,
   ChevronDownIcon,
   UsersIcon,
+  UserIcon,
   ArrowRightOnRectangleIcon,
   HomeIcon,
   SpeakerWaveIcon,
@@ -141,6 +196,7 @@ import {
   ChatBubbleLeftRightIcon,
   ClockIcon,
   PlusIcon,
+  Cog6ToothIcon
 } from '@heroicons/vue/24/outline'
 
 const route = useRoute()
@@ -258,6 +314,34 @@ const handleEscape = (event: KeyboardEvent) => {
     closeDropdowns()
     sidebarOpen.value = false
   }
+}
+
+const getNotificationIcon = (type: string) => {
+  const icons = {
+    announcement: SpeakerWaveIcon,
+    message: ChatBubbleLeftRightIcon,
+    system: Cog6ToothIcon
+  }
+  return icons[type as keyof typeof icons] || BellIcon
+}
+
+const getNotificationIconClass = (type: string): string => {
+  const classes = {
+    announcement: 'bg-primary-100 text-primary-600',
+    message: 'bg-secondary-100 text-secondary-600',
+    system: 'bg-gray-100 text-gray-600'
+  }
+  return classes[type as keyof typeof classes] || 'bg-gray-100 text-gray-600'
+}
+
+const formatNotificationDate = (dateString: Date): string => {
+  const date = new Date(dateString)
+  const now = new Date()
+  const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60))
+
+  if (diffInMinutes < 60) return `Hace ${diffInMinutes} min`
+  if (diffInMinutes < 1440) return `Hace ${Math.floor(diffInMinutes / 60)}h`
+  return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })
 }
 
 onMounted(() => {
