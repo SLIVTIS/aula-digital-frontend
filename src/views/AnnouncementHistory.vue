@@ -303,8 +303,6 @@ const deleting = ref(false)
 
 const { announcements, loading } = useAnnouncementHistory()
 
-console.log(announcements)
-
 const filteredAnnouncements = computed(() => {
   let filtered = [...announcements.value]
 
