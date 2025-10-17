@@ -7,6 +7,9 @@ const UserManagement = () => import('@/views/UserManagement.vue')
 const AvisosCentralizados = () => import('@/views/AvisosCentralizadosView.vue') //importar vista de avisos centralizados//
 const CreateAnnouncement = () => import('@/views/CreateAnnouncement.vue')
 const AnnouncementDetail = () => import('@/views/AnnouncementDetail.vue')
+const GalleryView = () => import('@/views/GalleryView.vue')
+
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -84,7 +87,18 @@ const router = createRouter({
         roles: ['admin', 'teacher'],
         title: 'Crear Aviso'
       }
-    }
+    },
+    {
+  path: '/gallery',
+  name: 'Gallery',
+  component: GalleryView,
+  meta: {
+    requiresAuth: true,
+    roles: ['admin', 'teacher', 'parent'],
+    title: 'Galería Multimedia'
+  }
+}
+
   ]
 })
 

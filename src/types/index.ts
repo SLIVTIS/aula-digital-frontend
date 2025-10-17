@@ -1,4 +1,12 @@
 import type { User } from "./user"
+export interface GalleryItem {
+  id: number;
+  title: string;
+  url: string; // URL donde se encuentra el archivo (foto o video)
+  mimeType: 'image' | 'video'; // Tipo de archivo para saber cómo renderizarlo
+  uploadedBy: string;
+  createdAt: string;
+}
 
 export interface ApiResponse<T> {
   success: boolean
