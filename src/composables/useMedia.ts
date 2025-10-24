@@ -40,7 +40,6 @@ export function useMedia() {
       })
 
       items.value = res.items
-      console.log(items.value)
       total.value = res.total
       lastPage.value = res.lastPage
     } catch (e: any) {
