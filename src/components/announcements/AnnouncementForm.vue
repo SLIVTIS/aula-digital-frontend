@@ -42,6 +42,7 @@
           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 text-sm">
           <option value="all">Todos</option>
           <option value="groups">Grupos</option>
+          <option value="teachers">Docentes</option>
         </select>
       </div>
 
