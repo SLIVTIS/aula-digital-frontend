@@ -33,6 +33,10 @@
           </div>
         </div>
       </div>
+      <button @click="download(media.id, media.title)"
+  class="px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition">
+  Descargar
+</button>
 
       <!-- Modal de subida -->
       <UploadModal v-if="showUpload" @close="showUpload = false" @uploaded="handleUploadSuccess" :show="showUpload" />
@@ -71,6 +75,20 @@ const formatDate = (dateStr: string) => {
 onMounted(() => {
   fetchList()
 });
+
+
+//Formato de Descarga
+const download = (id: number, filename: string) => {
+  // Crear enlace temporal para forzar descarga
+  const link = document.createElement('a');
+  link.href = `/media/${id}`; // Endpoint Laravel que devuelve el archivo
+  link.download = filename;    // Nombre con el que se descargará
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
+
 </script>
 
 <style scoped>
