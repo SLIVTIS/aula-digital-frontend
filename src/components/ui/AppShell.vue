@@ -346,6 +346,7 @@ const formatNotificationDate = (dateString: Date): string => {
 
 onMounted(() => {
   document.addEventListener('keydown', handleEscape)
+  fetchList()
 })
 
 onUnmounted(() => {

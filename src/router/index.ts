@@ -9,8 +9,6 @@ const CreateAnnouncement = () => import('@/views/CreateAnnouncement.vue')
 const AnnouncementDetail = () => import('@/views/AnnouncementDetail.vue')
 const GalleryView = () => import('@/views/GalleryView.vue')
 
-
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -89,16 +87,15 @@ const router = createRouter({
       }
     },
     {
-  path: '/gallery',
-  name: 'Gallery',
-  component: GalleryView,
-  meta: {
-    requiresAuth: true,
-    roles: ['admin', 'teacher', 'parent'],
-    title: 'Galería Multimedia'
-  }
-}
-
+      path: '/gallery',
+      name: 'Gallery',
+      component: GalleryView,
+      meta: {
+        requiresAuth: true,
+        roles: ['admin', 'teacher', 'parent'],
+        title: 'Galería Multimedia'
+      }
+    }
   ]
 })
 
