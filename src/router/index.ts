@@ -8,8 +8,7 @@ const AvisosCentralizados = () => import('@/views/AvisosCentralizadosView.vue') 
 const CreateAnnouncement = () => import('@/views/CreateAnnouncement.vue')
 const AnnouncementDetail = () => import('@/views/AnnouncementDetail.vue')
 const GalleryView = () => import('@/views/GalleryView.vue')
-
-
+const Messages = () => import('@/views/Messages.vue')
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -89,15 +88,25 @@ const router = createRouter({
       }
     },
     {
-  path: '/gallery',
-  name: 'Gallery',
-  component: GalleryView,
-  meta: {
-    requiresAuth: true,
-    roles: ['admin', 'teacher', 'parent'],
-    title: 'Galería Multimedia'
-  }
-}
+      path: '/gallery',
+      name: 'Gallery',
+      component: GalleryView,
+      meta: {
+        requiresAuth: true,
+        roles: ['admin', 'teacher', 'parent'],
+        title: 'Galería Multimedia'
+      }
+    },
+    {
+      path: '/messages',
+      name: 'Messages',
+      component: Messages,
+      meta: {
+        requiresAuth: true,
+        roles: ['admin', 'teacher', 'parent'],
+        title: 'Mensajes'
+      }
+    }
 
   ]
 })

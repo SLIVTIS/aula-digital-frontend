@@ -181,6 +181,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import { useNotifications } from '@/composables/useNotifications'
+import { useUnreadCount } from "@/composables/useUnreadCount"
 import {
   AcademicCapIcon,
   Bars3Icon,
@@ -207,6 +208,9 @@ const {
   items, loading, page, hasNext, hasPrev, badge,
   fetchList, setRead, setAllRead, setFilters, fetchBadge
 } = useNotifications({ autoFetchList: true, autoFetchBadge: true, badgePollMs: 15000 });
+
+const { totalUnread, refreshUnreadCount, decrementBy, onIncomingMessage } =
+  useUnreadCount(user.value?.id);
 
 const appName = import.meta.env.VITE_APP_NAME || 'Plataforma Escolar'
 
@@ -245,7 +249,7 @@ const navigationItems = computed(() => {
       name: 'Mensajes',
       href: '/messages',
       icon: ChatBubbleLeftRightIcon,
-      badge: 1
+      badge: totalUnread
     }
   ]
 
@@ -346,6 +350,8 @@ const formatNotificationDate = (dateString: Date): string => {
 
 onMounted(() => {
   document.addEventListener('keydown', handleEscape)
+  fetchList()
+  refreshUnreadCount()
 })
 
 onUnmounted(() => {
